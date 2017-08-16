@@ -25,17 +25,24 @@ class App extends Component {
     this.setState({
       books: [
         ...otherBook,
-        {
-          ...updatedBook,
-          title: `${updatedBook.title} (saving...)`,
-        },
+        ...(updatedBook.shelf === 'none'
+          ? []
+          : [
+            {
+              ...updatedBook,
+              title: `${updatedBook.title} (saving...)`,
+            },
+          ]),
       ],
     });
 
     await BooksAPI.update(updatedBook, updatedBook.shelf);
 
     this.setState({
-      books: [...otherBook, updatedBook],
+      books: [
+        ...otherBook,
+        ...(updatedBook.shelf === 'none' ? [] : [updatedBook]),
+      ],
     });
   };
 

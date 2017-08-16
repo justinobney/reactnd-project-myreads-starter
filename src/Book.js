@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
 export const bookShape = PropTypes.shape({
-  imageLinks: PropTypes.object.isRequired,
+  imageLinks: PropTypes.object,
   shelf: PropTypes.string,
   title: PropTypes.string.isRequired,
   authors: PropTypes.arrayOf(PropTypes.string),
@@ -11,6 +11,7 @@ export const bookShape = PropTypes.shape({
 class Book extends Component {
   static propTypes = {
     book: bookShape,
+    canRemove: PropTypes.bool,
   };
   _updateShelf = event => {
     const {book, onBookUpdated} = this.props;
@@ -20,7 +21,8 @@ class Book extends Component {
     });
   };
   render() {
-    const {book} = this.props;
+    const {book, canRemove} = this.props;
+    const {imageLinks = {}} = book;
     return (
       <div className="book">
         <div className="book-top">
@@ -29,18 +31,20 @@ class Book extends Component {
             style={{
               width: 128,
               height: 193,
-              backgroundImage: `url("${book.imageLinks.thumbnail}")`,
+              backgroundImage: `url("${imageLinks.thumbnail}")`,
               backgroundRepeat: 'no-repeat',
               backgroundPosition: 'center',
             }}
           />
           <div className="book-shelf-changer">
-            <select value={book.shelf || ''} onChange={this._updateShelf}>
-              <option disabled>Move to...</option>
+            <select value={book.shelf || 'none'} onChange={this._updateShelf}>
+              <option disabled value="none">
+                Move to...
+              </option>
               <option value="currentlyReading">Currently Reading</option>
               <option value="wantToRead">Want to Read</option>
               <option value="read">Read</option>
-              <option value="">None</option>
+              {canRemove && <option value="none">None</option>}
             </select>
           </div>
         </div>

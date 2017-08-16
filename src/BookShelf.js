@@ -32,7 +32,11 @@ class BookShelf extends Component {
 
   _renderBook = book =>
     <li key={book.id}>
-      <Book book={book} onBookUpdated={this.props.onBookUpdated} />
+      <Book
+        book={book}
+        onBookUpdated={this.props.onBookUpdated}
+        canRemove={true}
+      />
     </li>;
 
   _renderShelf = (title, books) =>
