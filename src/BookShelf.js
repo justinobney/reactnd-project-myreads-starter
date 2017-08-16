@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import Book from './Book';
+import Book, {bookShape} from './Book';
+import PropTypes from 'prop-types';
 
 const shelfMap = {
   currentlyReading: 'Currently Reading',
@@ -9,6 +10,11 @@ const shelfMap = {
 };
 
 class BookShelf extends Component {
+  static propTypes = {
+    myBooks: PropTypes.arrayOf(bookShape).isRequired,
+    onBookUpdated: PropTypes.func.isRequired,
+  };
+
   _getShelfves = () => {
     const {myBooks} = this.props;
     return myBooks.reduce(

@@ -1,6 +1,17 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+
+export const bookShape = PropTypes.shape({
+  imageLinks: PropTypes.object.isRequired,
+  shelf: PropTypes.string,
+  title: PropTypes.string.isRequired,
+  authors: PropTypes.arrayOf(PropTypes.string),
+});
 
 class Book extends Component {
+  static propTypes = {
+    book: bookShape,
+  };
   _updateShelf = event => {
     const {book, onBookUpdated} = this.props;
     onBookUpdated({

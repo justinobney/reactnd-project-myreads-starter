@@ -2,9 +2,15 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import debounce from 'lodash/debounce';
 import * as BooksAPI from './BooksAPI';
-import Book from './Book';
+import Book, {bookShape} from './Book';
+import PropTypes from 'prop-types';
 
 class Search extends Component {
+  static propTypes = {
+    myBooks: PropTypes.arrayOf(bookShape).isRequired,
+    onBookUpdated: PropTypes.func.isRequired,
+  };
+
   state = {
     results: [],
   };
